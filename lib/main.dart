@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'provider/store.dart';
+import 'screen/home_screen.dart';
 import 'screen/select_food.dart';
 import 'screen/select_seat.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: ((context) => Store()),
+        )
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -19,9 +31,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const SelectFood(),
+      home: const HomeScreen(),
     );
   }
 }
-
-

@@ -19,6 +19,7 @@ class _SelectSeatState extends State<SelectSeat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(top: 8.0),
