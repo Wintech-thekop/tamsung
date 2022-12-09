@@ -2,7 +2,12 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import 'beverage_screen.dart';
+import 'order_status_screen.dart';
+import 'ordering_screen.dart';
 import 'select_food.dart';
+import 'select_seat.dart';
+import 'statistics_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,32 +18,63 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List menuItems = [
-    {'item': 'รายการอาหาร', 'color': Colors.teal[100], 'icon': Icons.list_alt},
     {
-      'item': 'เครื่องดื่ม',
-      'color': Colors.teal[200],
-      'icon': Icons.local_drink
+      'item': 'รายการอาหาร',
+      'color': Colors.teal[100],
+      'icon': Icons.list_alt,
+      'screen': SelectFood(),
     },
-    {'item': 'สถานะคำสั่งซื้อ', 'color': Colors.teal[300], 'icon': Icons.book},
+    {
+      'item': 'รายการเครื่องดื่ม',
+      'color': Colors.teal[200],
+      'icon': Icons.local_drink,
+      'screen': BeverageScreen(),
+    },
+    {
+      'item': 'สถานะคำสั่งซื้อ',
+      'color': Colors.teal[300],
+      'icon': Icons.book,
+      'screen': OrderStatusScreen(),
+    },
     {
       'item': 'เมนูที่กำลังทำ',
       'color': Colors.teal[400],
-      'icon': Icons.food_bank
+      'icon': Icons.food_bank,
+      'screen': OrderingScreen(),
     },
-    {'item': 'สถิติ', 'color': Colors.teal[500], 'icon': Icons.list_sharp},
+    {
+      'item': 'สถิติรายการอาหาร',
+      'color': Colors.teal[500],
+      'icon': Icons.list_sharp,
+      'screen': StatisticsScreen(),
+    },
+    {
+      'item': 'จำนวนที่นั่ง',
+      'color': Colors.teal[600],
+      'icon': Icons.event_seat,
+      'screen': SelectSeat(),
+    },
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('วินเทคโภชนา',
+          style: TextStyle(
+            fontSize: 24,
+            fontFamily: 'fonttintinver2update',
+            fontWeight: FontWeight.bold,
+          ),)),
       body: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
           ),
-          itemCount: 5,
+          itemCount: 6,
           itemBuilder: (BuildContext context, int index) => GestureDetector(
                 onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => SelectFood()),
+                  MaterialPageRoute(
+                    builder: (context) => menuItems[index]['screen'],
+                  ),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(5.0),
@@ -54,7 +90,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Text(
                             menuItems[index]['item'],
-                            style: const TextStyle(fontSize: 20),
+                            style: const TextStyle(
+                              fontSize: 26,
+                              fontFamily: 'fonttintinver2update',
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ],
                       ),

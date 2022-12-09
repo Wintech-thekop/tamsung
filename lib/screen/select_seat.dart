@@ -19,7 +19,16 @@ class _SelectSeatState extends State<SelectSeat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(
+          'จำนวนที่นั่ง',
+          style: TextStyle(
+            fontSize: 24,
+            fontFamily: 'fonttintinver2update',
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(top: 8.0),
