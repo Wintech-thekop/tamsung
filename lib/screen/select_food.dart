@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
 import 'package:tamsang/provider/store.dart';
@@ -11,8 +13,10 @@ class SelectFood extends StatefulWidget {
 }
 
 class _SelectFoodState extends State<SelectFood> {
-  bool check = false;
-  List listFoods = [
+  int checkRepaet = 0;
+  List listFoods = [];
+
+  List dropDownFoods = [
     {
       'pic': 'เมนู',
       'name': 'ผัดกระเพรา',
@@ -84,6 +88,10 @@ class _SelectFoodState extends State<SelectFood> {
       'sum': 0,
     },
   ];
+
+  String? dropDown;
+  Object? addMenu;
+
   @override
   Widget build(BuildContext context) {
     int sumAll = 0;
@@ -102,6 +110,67 @@ class _SelectFoodState extends State<SelectFood> {
       body: SafeArea(
         child: Column(
           children: [
+            Container(
+              width: 300,
+              height: 100,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  DropdownButton(
+                    hint: const Text(
+                      "กรุณาเลือกเมนู",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontFamily: 'fonttintinver2update',
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    value: dropDown,
+                    items: dropDownFoods
+                        .map(
+                          (item) => DropdownMenuItem(
+                            onTap: () => setState(() => addMenu = item),
+                            value: item['name'],
+                            child: Text(
+                              item['name'],
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontFamily: 'fonttintinver2update',
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (item) {
+                      setState(() {
+                        dropDown = item.toString();
+                      });
+                    },
+                  ),
+                  ElevatedButton(
+                    onPressed: () => setState(() {
+                      checkRepaet = 0;
+
+                      listFoods
+                          .map((e) => e == addMenu ? checkRepaet++ : null)
+                          .toList();
+                      if ((dropDown != null) && (checkRepaet == 0)) {
+                        listFoods.add(addMenu);
+                      }
+                    }),
+                    child: const Text(
+                      'เลือก',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontFamily: 'fonttintinver2update',
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Expanded(
               child: ListView.builder(
                 itemCount: listFoods.length,
